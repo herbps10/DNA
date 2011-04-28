@@ -24,10 +24,11 @@ int main(int argc, char *argv[]) {
 
 	int frame = rank;
 
-	FILE *fhandle = fopen("/home/herb/git/dna/data/chr1.fa", "r");
+	FILE *fhandle = fopen("/root/dna/DNA/data/chr1.fa", "r");
 
 	if(fhandle == NULL) {
 		printf("Cannot open file");
+		MPI_Finalize();
 		return(0);
 	}
 	else {
@@ -115,13 +116,11 @@ int main(int argc, char *argv[]) {
 		//if(base_counter >= 100) break;
 	}
 
-	int sum = num_stops[0] + num_stops[1] + num_stops[2];
-
-	for(int i = 0; i < 3; i++) {
-		printf("Frame %i: %i stop codons, %f percent\n", i, num_stops[i], (float)num_stops[i]/(float)sum*100);
-	}
+	printf("Frame %i: %i stop codons\n", frame, num_stops[frame]);
 
 	fclose(fhandle);
+
+	MPI_Finalize();
 
 	printf("\n");
 }
